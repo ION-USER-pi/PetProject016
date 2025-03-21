@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>petproject016</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3a86ff;
+            --secondary-color: #ff006e;
+            --accent-color: #8338ec;
+            --light-bg: #f8f9fa;
+            --dark-bg: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .navbar {
+            background-color: var(--dark-bg);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/800/600') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-box {
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+        }
+        
+        .service-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .orchestration-icon {
+            color: var(--secondary-color);
+        }
+        
+        .choreography-icon {
+            color: var(--accent-color);
+        }
+        
+        .demo-section {
+            background-color: var(--light-bg);
+            padding: 5rem 0;
+        }
+        
+        .diagram {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .diagram svg {
+            max-width: 100%;
+        }
+        
+        .comparison-table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .comparison-table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .social-icons i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: white;
+            transition: color 0.3s;
+        }
+        
+        .social-icons i:hover {
+            color: var(--primary-color);
+        }
+        
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(58, 134, 255, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+        
+        #timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            background-color: white;
+            border: 4px solid var(--primary-color);
+        }
+        
+        .timeline-left {
+            left: 0;
+        }
+        
+        .timeline-right {
+            left: 50%;
+        }
+        
+        .timeline-left::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            top: 0;
+            right: -1px;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-right::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            top: 0;
+            left: -1px;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-right::after {
+            left: -12px;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 20px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+                right: auto;
+            }
+            
+            .timeline-right {
+                left: 0;
+            }
+            
+            .timeline-left::before, .timeline-right::before {
+                left: 30px;
+                right: auto;
+            }
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+        }
+        
+        .slide-in-left {
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 1s ease-out, opacity 1s ease-out;
+        }
+        
+        .slide-in-right {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 1s ease-out, opacity 1s ease-out;
+        }
+        
+        .slide-in-left.visible, .slide-in-right.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        /* Dark mode toggle */
+        .dark-mode {
+            background-color: var(--dark-bg);
+            color: white;
+        }
+        
+        .dark-mode .service-box,
+        .dark-mode .diagram,
+        .dark-mode .comparison-table,
+        .dark-mode .timeline-content,
+        .dark-mode .accordion-item {
+            background-color: #343a40;
+            color: white;
+            border-color: #495057;
+        }
+        
+        .dark-mode .accordion-button {
+            background-color: #343a40;
+            color: white;
+        }
+        
+        .dark-mode .accordion-button:not(.collapsed) {
+            background-color: rgba(58, 134, 255, 0.3);
+        }
+        
+        .dark-mode .demo-section {
+            background-color: #2b3035;
+        }
+
+        .case-study-box {
+            border-left: 5px solid var(--primary-color);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .case-study-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark-mode .case-study-box {
+            background-color: #343a40;
+            color: white;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #dee2e6;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(58, 134, 255, 0.25);
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark-mode .card {
+            background-color: #343a40;
+            color: white;
+        }
+        
+        .dark-mode .card-header {
+            border-bottom-color: #495057;
+        }
+        
+        .dark-mode pre {
+            background-color: #212529 !important;
+            color: #e9ecef;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="100">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cogs me-2"></i>Web Services
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#comparison">Comparison</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#timeline">Timeline</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#case-studies">Case Studies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button id="dark-mode-toggle" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Web Service Coordination</h1>
+            <h2 class="mb-4">Orchestration & Choreography</h2>
+            <p class="lead mb-5">Modern approaches to designing, developing, and managing complex distributed systems</p>
+            <div class="d-flex justify-content-center">
+                <a href="#services" class="btn btn-light btn-lg me-3">Learn More</a>
+                <a href="#demo" class="btn btn-outline-light btn-lg">See Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h2 class="mb-4">Understanding Web Service Coordination</h2>
+                    <p class="lead">In today's interconnected digital ecosystem, coordinating web services effectively is crucial for building scalable and maintainable applications.</p>
+                    <p>Web service coordination refers to the methods and patterns used to manage interactions between multiple services in a distributed system. There are primarily two approaches to service coordination:</p>
+                    <ul class="mt-4">
+                        <li class="mb-2"><strong>Orchestration:</strong> Centralized coordination where a central component directs and controls service interactions</li>
+                        <li class="mb-2"><strong>Choreography:</strong> Decentralized coordination where services interact directly with each other based on predefined rules</li>
+                    </ul>
+                    <button id="read-more-btn" class="btn btn-primary mt-3">Read More</button>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ratio ratio-16x9">
+                        <img src="WebServices.png" alt="Web Services" class="rounded shadow-lg img-fluid">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="more-content" class="row mt-5" style="display: none;">
+                <div class="col-12">
+                    <h3 class="mb-4">Evolution of Web Service Coordination</h3>
+                    <p>The evolution of web service coordination has been driven by the need to manage increasingly complex distributed systems. From simple XML-based web services to modern microservices architectures, coordination patterns have adapted to meet changing requirements:</p>
+                    
+                    <div class="accordion mt-4" id="historyAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Early Web Services (2000s)
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#historyAccordion">
+                                <div class="accordion-body">
+                                    <p>Early web services relied on SOAP (Simple Object Access Protocol) and WSDL (Web Service Description Language). Coordination was primarily handled through heavyweight orchestration engines implementing standards like WS-BPEL (Business Process Execution Language).</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    RESTful Services (2010s)
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#historyAccordion">
+                                <div class="accordion-body">
+                                    <p>The rise of RESTful services brought simpler, resource-oriented interactions. Coordination became lighter, with a shift toward choreography and event-driven patterns. API gateways emerged as important coordination points in these architectures.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Microservices Era (2015+)
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#historyAccordion">
+                                <div class="accordion-body">
+                                    <p>Microservices architecture led to highly distributed systems requiring sophisticated coordination. Both orchestration (via orchestrators and workflow engines) and choreography (via message brokers and event streams) found their place in different contexts. Technologies like Kubernetes, Apache Kafka, and service meshes emerged as critical coordination infrastructure.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Modern Cloud-Native (2020+)
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#historyAccordion">
+                                <div class="accordion-body">
+                                    <p>Today's cloud-native landscapes feature serverless architectures, function-as-a-service platforms, and event-driven systems that blend orchestration and choreography approaches. Coordination is increasingly handled by cloud-native workflow engines, event meshes, and specialized coordination services optimized for specific use cases.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-3">Coordination Approaches</h2>
+                <p class="lead px-lg-5 mx-lg-5">Understanding the different service coordination patterns and when to use them</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-4 fade-in">
+                    <div class="service-box text-center">
+                        <i class="fas fa-network-wired service-icon"></i>
+                        <h3 class="mb-3">Coordination</h3>
+                        <p>The fundamental concept of managing interactions between multiple services in a distributed system. Coordination ensures that services work together smoothly to accomplish complex tasks.</p>
+                        <p>Key aspects include message passing, state management, error handling, and ensuring consistency across services.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in">
+                    <div class="service-box text-center">
+                        <i class="fas fa-sitemap service-icon orchestration-icon"></i>
+                        <h3 class="mb-3">Orchestration</h3>
+                        <p>A centralized approach where a single controller (the orchestrator) directs all service interactions. The orchestrator maintains the workflow state and directs each service on what actions to take.</p>
+                        <p>Think of it as a conductor directing an orchestra, where each service is a musician following central direction.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 fade-in">
+                    <div class="service-box text-center">
+                        <i class="fas fa-people-arrows service-icon choreography-icon"></i>
+                        <h3 class="mb-3">Choreography</h3>
+                        <p>A decentralized approach where each service acts independently based on events and messages from other services. There is no central controller – services react to events and notifications.</p>
+                        <p>Think of it as a dance troupe where each dancer knows their part and reacts to others, creating a coordinated performance without central direction.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 fade-in">
+                    <div class="service-box h-100">
+                        <h4 class="mb-3">When to Use Orchestration</h4>
+                        <ul>
+                            <li>Complex business processes with clear sequential steps</li>
+                            <li>Need for centralized error handling and recovery</li>
+                            <li>When maintaining a single source of truth for process state is important</li>
+                            <li>When services are primarily synchronous and request/response-oriented</li>
+                            <li>When transactions and compensating actions are required</li>
+                        </ul>
+                        <div class="mt-4">
+                            <h5>Common Technologies:</h5>
+                            <span class="badge bg-primary me-2 mb-2">Netflix Conductor</span>
+                            <span class="badge bg-primary me-2 mb-2">AWS Step Functions</span>
+                            <span class="badge bg-primary me-2 mb-2">Camunda</span>
+                            <span class="badge bg-primary me-2 mb-2">Zeebe</span>
+                            <span class="badge bg-primary me-2 mb-2">Apache Airflow</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 fade-in">
+                    <div class="service-box h-100">
+                        <h4 class="mb-3">When to Use Choreography</h4>
+                        <ul>
+                            <li>Highly distributed, loosely coupled systems</li>
+                            <li>When services need to evolve independently</li>
+                            <li>Event-driven architectures where responsiveness is crucial</li>
+                            <li>Systems with high scalability requirements</li>
+                            <li>When business processes are dynamic and adaptable</li>
+                        </ul>
+                        <div class="mt-4">
+                            <h5>Common Technologies:</h5>
+                            <span class="badge bg-secondary me-2 mb-2">Apache Kafka</span>
+                            <span class="badge bg-secondary me-2 mb-2">RabbitMQ</span>
+                            <span class="badge bg-secondary me-2 mb-2">AWS EventBridge</span>
+                            <span class="badge bg-secondary me-2 mb-2">Cloud Pub/Sub</span>
+                            <span class="badge bg-secondary me-2 mb-2">NATS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-3">Interactive Demonstrations</h2>
+                <p class="lead px-lg-5 mx-lg-5">Visualizing orchestration and choreography patterns</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4 slide-in-left">
+                    <div class="diagram">
+                        <h4 class="text-center mb-4">Orchestration Pattern</h4>
+                        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Orchestrator -->
+                            <rect id="orchestrator" x="350" y="50" width="120" height="60" rx="10" fill="#ff006e" />
+                            <text x="410" y="85" text-anchor="middle" fill="white" font-weight="bold">Orchestrator</text>
+                            
+                            <!-- Services -->
+                            <rect id="service1" x="100" y="200" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="150" y="230" text-anchor="middle" fill="white">Service A</text>
+                            
+                            <rect id="service2" x="350" y="200" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="400" y="230" text-anchor="middle" fill="white">Service B</text>
+                            
+                            <rect id="service3" x="600" y="200" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="650" y="230" text-anchor="middle" fill="white">Service C</text>
+                            
+                            <!-- Database -->
+                            <rect id="database" x="350" y="300" width="100" height="50" rx="8" fill="#8338ec" />
+                            <text x="400" y="330" text-anchor="middle" fill="white">Database</text>
+                            
+                            <!-- Connections -->
+                            <path id="conn1" d="M 410 110 L 410 130 L 150 130 L 150 200" stroke="#ff006e" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn2" d="M 410 110 L 410 200" stroke="#ff006e" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn3" d="M 410 110 L 410 130 L 650 130 L 650 200" stroke="#ff006e" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn4" d="M 400 250 L 400 300" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            
+                            <!-- Arrow marker -->
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+                                </marker>
+                            </defs>
+                        </svg>
+                        <div class="mt-4">
+                            <button id="animate-orchestration" class="btn btn-primary w-100">Animate Flow</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4 slide-in-right">
+                    <div class="diagram">
+                        <h4 class="text-center mb-4">Choreography Pattern</h4>
+                        <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Event Bus -->
+                            <rect id="event-bus" x="250" y="170" width="300" height="60" rx="8" fill="#ff006e" />
+                            <text x="400" y="205" text-anchor="middle" fill="white" font-weight="bold">Event Bus / Message Broker</text>
+                            
+                            <!-- Services -->
+                            <rect id="service1c" x="100" y="50" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="150" y="80" text-anchor="middle" fill="white">Service A</text>
+                            
+                            <rect id="service2c" x="350" y="50" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="400" y="80" text-anchor="middle" fill="white">Service B</text>
+                            
+                            <rect id="service3c" x="600" y="50" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="650" y="80" text-anchor="middle" fill="white">Service C</text>
+                            
+                            <rect id="service4c" x="100" y="300" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="150" y="330" text-anchor="middle" fill="white">Service D</text>
+                            
+                            <rect id="service5c" x="600" y="300" width="100" height="50" rx="8" fill="#3a86ff" />
+                            <text x="650" y="330" text-anchor="middle" fill="white">Service E</text>
+                            
+                            <!-- Connections -->
+                            <path id="conn1c" d="M 150 100 L 150 170" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn2c" d="M 400 100 L 400 170" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn3c" d="M 650 100 L 650 170" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn4c" d="M 150 300 L 150 230" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            <path id="conn5c" d="M 650 300 L 650 230" stroke="#3a86ff" stroke-width="3" fill="none" marker-end="url(#arrowhead)" />
+                            
+                            <!-- Arrow marker is defined in the other SVG -->
+                        </svg>
+                        <div class="mt-4">
+                            <button id="animate-choreography" class="btn btn-primary w-100">Animate Flow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-lg-12 fade-in">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h4 class="mb-0">Code Examples</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" id="codeTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="orchestration-tab" data-bs-toggle="tab" data-bs-target="#orchestration-code" type="button" role="tab" aria-controls="orchestration-code" aria-selected="true">Orchestration Example</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="choreography-tab" data-bs-toggle="tab" data-bs-target="#choreography-code" type="button" role="tab" aria-controls="choreography-code" aria-selected="false">Choreography Example</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3" id="codeTabsContent">
+                                <div class="tab-pane fade show active" id="orchestration-code" role="tabpanel" aria-labelledby="orchestration-tab">
+                                    <pre class="bg-light p-3"><code>// Example Orchestration using AWS Step Functions
+{
+  "Comment": "A simple order processing workflow",
+  "StartAt": "ValidateOrder",
+  "States": {
+    "ValidateOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:ValidateOrder",
+      "Next": "ProcessPayment"
+    },
+    "ProcessPayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:ProcessPayment",
+      "Next": "CheckInventory"
+    },
+    "CheckInventory": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:CheckInventory",
+      "Next": "FulfillOrder"
+    },
+    "FulfillOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:123456789012:function:FulfillOrder",
+      "End": true
+    }
+  }
+}</code></pre>
+                                </div>
+                                <div class="tab-pane fade" id="choreography-code" role="tabpanel" aria-labelledby="choreography-tab">
+                                    <pre class="bg-light p-3"><code>// Example Choreography using Kafka
+
+// Order Service - Publishes event when new order is created
+public void createOrder(Order order) {
+    orderRepository.save(order);
+    kafkaTemplate.send("order-events", 
+        new OrderCreatedEvent(order.getId(), order.getCustomerId(), order.getItems()));
+}
+
+// Payment Service - Subscribes to order events and publishes payment events
+@KafkaListener(topics = "order-events")
+public void processOrderEvent(OrderCreatedEvent event) {
+    if (event.getType().equals("ORDER_CREATED")) {
+        Payment payment = paymentService.processPayment(event.getOrderId(), event.getAmount());
+        kafkaTemplate.send("payment-events", 
+            new PaymentProcessedEvent(payment.getId(), event.getOrderId(), payment.getStatus()));
+    }
+}
+
+// Inventory Service - Subscribes to payment events
+@KafkaListener(topics = "payment-events")
+public void processPaymentEvent(PaymentProcessedEvent event) {
+    if (event.getStatus().equals("SUCCEEDED")) {
+        Order order = orderService.getOrder(event.getOrderId());
+        inventoryService.reserveItems(order.getItems());
+        kafkaTemplate.send("inventory-events", 
+            new ItemsReservedEvent(event.getOrderId(), order.getItems()));
+    }
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section id="comparison" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-3">Orchestration vs. Choreography</h2>
+                <p class="lead px-lg-5 mx-lg-5">A detailed comparison of the two coordination approaches</p>
+            </div>
+            
+            <div class="table-responsive fade-in">
+                <table class="table comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Orchestration</th>
+                            <th>Choreography</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Control Flow</strong></td>
+                            <td>Centralized - Single component controls flow</td>
+                            <td>Decentralized - Each service determines next steps</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Coupling</strong></td>
+                            <td>Tighter coupling - Services coupled to orchestrator</td>
+                            <td>Looser coupling - Services only know about events</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Visibility</strong></td>
+                            <td>High - Process state visible in orchestrator</td>
+                            <td>Lower - Process state distributed across services</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Error Handling</strong></td>
+                            <td>Centralized - Orchestrator manages retries/recovery</td>
+                            <td>Distributed - Each service handles its own errors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Scalability</strong></td>
+                            <td>Potential bottleneck at orchestrator</td>
+                            <td>Highly scalable - No central coordination point</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flexibility</strong></td>
+                            <td>Requires orchestrator updates for changes</td>
+                            <td>Services can evolve independently</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity</strong></td>
+                            <td>Simpler to understand and debug</td>
+                            <td>More complex to reason about and test</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transactionality</strong></td>
+                            <td>Easier to implement compensating transactions</td>
+                            <td>Requires eventual consistency patterns</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Development Speed</strong></td>
+                            <td>Faster for well-defined processes</td>
+                            <td>Faster for evolving systems with independent teams</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="text-center mt-5">
+                <h3>The Hybrid Approach</h3>
+                <p class="lead">Many modern systems use a combination of both patterns</p>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-8 mx-auto fade-in">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">Best Practices for Hybrid Coordination</h4>
+                            <ol>
+                                <li class="mb-3"><strong>Use orchestration for critical business processes</strong> where visibility, transactionality, and centralized error handling are important.</li>
+                                <li class="mb-3"><strong>Use choreography for high-volume operational flows</strong> where performance, scalability, and service autonomy are priorities.</li>
+                                <li class="mb-3"><strong>Consider domain boundaries</strong> - orchestrate within bounded contexts, choreograph between them.</li>
+                                <li class="mb-3"><strong>Implement event sourcing</strong> to maintain an audit trail and enable reconstruction of state across choreographed services.</li>
+                                <li class="mb-3"><strong>Use saga patterns</strong> for distributed transactions that span multiple services in choreography.</li>
+                                <li class="mb-3"><strong>Establish clear monitoring and observability practices</strong> to track process execution across services.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-3">Evolution of Service Coordination</h2>
+                <p class="lead px-lg-5 mx-lg-5">Key milestones in the development of coordination patterns</p>
+            </div>
+            
+            <div id="timeline" class="fade-in">
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>2000-2005</h3>
+                        <h4>SOAP-Based Web Services</h4>
+                        <p>Early web service orchestration using WS-BPEL (Business Process Execution Language) and heavy XML-based standards. Enterprise Service Buses (ESBs) emerge as integration hubs.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <h3>2005-2010</h3>
+                        <h4>SOA Maturity</h4>
+                        <p>Service-Oriented Architecture matures with better orchestration tools. Choreography concepts begin to emerge but remain mostly theoretical. BPM (Business Process Management) tools gain popularity.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>2010-2015</h3>
+                        <h4>REST & API Management</h4>
+                        <p>RESTful services dominate, leading to lighter orchestration. API gateways become important coordination points. Message brokers gain popularity enabling early choreography patterns.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-right">
+                    <div class="timeline-content">
+                        <h3>2015-2020</h3>
+                        <h4>Microservices Revolution</h4>
+                        <p>Microservices drive need for both patterns. Container orchestration platforms like Kubernetes emerge. Event-driven architectures and streaming platforms enable sophisticated choreography at scale.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item timeline-left">
+                    <div class="timeline-content">
+                        <h3>2020-Present</h3>
+                        <h4>Cloud-Native Coordination</h4>
+                        <p>Hybrid approaches become standard. Serverless workflows, service meshes, and event meshes provide sophisticated coordination infrastructure. Focus shifts to observability and resilience across distributed systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="mb-3">Real-World Case Studies</h2>
+                <p class="lead px-lg-5 mx-lg-5">Examining how organizations implement service coordination</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4 fade-in">
+                    <div class="case-study-box">
+                        <h4>E-Commerce Order Processing</h4>
+                        <p class="text-muted">Retail Industry</p>
+                        <p><strong>Challenge:</strong> Managing complex order fulfillment flow involving inventory, payment, shipping, and notification services.</p>
+                        <p><strong>Solution:</strong> Implemented a hybrid approach with:</p>
+                        <ul>
+                            <li>Orchestration for the core order processing flow using AWS Step Functions</li>
+                            <li>Choreography for inventory updates and shipping notifications using Amazon SNS/SQS</li>
+                        </ul>
+                        <p><strong>Results:</strong> 40% reduction in order processing time, improved visibility into order status, and better error recovery.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4 fade-in">
+                    <div class="case-study-box">
+                        <h4>Financial Transaction Processing</h4>
+                        <p class="text-muted">Banking Industry</p>
+                        <p><strong>Challenge:</strong> Building a real-time transaction system with strict consistency requirements while maintaining scalability.</p>
+                        <p><strong>Solution:</strong> Implemented:</p>
+                        <ul>
+                            <li>Orchestration for critical transaction paths using Camunda BPM</li>
+                            <li>Choreography for account updates and notifications using Apache Kafka</li>
+                            <li>Saga pattern for distributed transaction management</li>
+                        </ul>
+                        <p><strong>Results:</strong> Achieved 99.99% transaction reliability with 5x improvement in throughput compared to previous system.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4 fade-in">
+                    <div class="case-study-box">
+                        <h4>Travel Booking Platform</h4>
+                        <p class="text-muted">Travel Industry</p>
+                        <p><strong>Challenge:</strong> Coordinating flight, hotel, car rental, and insurance services from multiple providers.</p>
+                        <p><strong>Solution:</strong> Implemented:</p>
+                        <ul>
+                            <li>Choreography-based architecture using event sourcing</li>
+                            <li>Apache Kafka as the central event bus</li>
+                            <li>Local orchestration within specific bounded contexts</li>
+                        </ul>
+                        <p><strong>Results:</strong> Reduced integration complexity by 60%, improved service provider onboarding from weeks to days.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4 fade-in">
+                    <div class="case-study-box">
+                        <h4>Healthcare Data Exchange</h4>
+                        <p class="text-muted">Healthcare Industry</p>
+                        <p><strong>Challenge:</strong> Securely exchanging patient data between hospitals, labs, pharmacies, and insurance providers.</p>
+                        <p><strong>Solution:</strong> Implemented:</p>
+                        <ul>
+                            <li>Orchestration for patient data workflows using Temporal</li>
+                            <li>API Gateway for access control and security</li>
+                            <li>Event-driven architecture for real-time updates</li>
+                        </ul>
+                        <p><strong>Results:</strong> 70% faster data exchange, improved compliance with healthcare regulations, enhanced patient care coordination.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0 slide-in-left">
+                    <h2 class="mb-4">Get in Touch</h2>
+                    <p class="lead">Have questions about web service coordination? Want to discuss your specific use case?</p>
+                    <p>Our team of experts is ready to help you determine the best approach for your organization's needs. Fill out the form and we'll get back to you within 24 hours.</p>
+                    
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Additional Resources</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-file-pdf me-2 text-primary"></i> <a href="#">Orchestration vs. Choreography Whitepaper</a></li>
+                                <li class="mb-2"><i class="fas fa-video me-2 text-primary"></i> <a href="#">Webinar: Best Practices in Service Coordination</a></li>
+                                <li class="mb-2"><i class="fas fa-book me-2 text-primary"></i> <a href="#">Service Coordination Reference Architecture</a></li>
+                                <li class="mb-2"><i class="fas fa-tools me-2 text-primary"></i> <a href="#">Coordination Pattern Implementation Guide</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 slide-in-right">
+                    <div class="card shadow-sm">
+                        <div class="card-body p-4">
+                            <h4 class="card-title mb-4">Contact Us</h4>
+                            <form class="contact-form">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="company" class="form-label">Company</label>
+                                    <input type="text" class="form-control" id="company">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="interest" class="form-label">Primary Interest</label>
+                                    <select class="form-select" id="interest">
+                                        <option selected>Select your primary interest</option>
+                                        <option value="orchestration">Service Orchestration</option>
+                                        <option value="choreography">Service Choreography</option>
+                                        <option value="hybrid">Hybrid Approaches</option>
+                                        <option value="consulting">Consulting Services</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message" class="form-label">Message</label>
+                                    <textarea class="form-control" id="message" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Web Service Coordination</h5>
+                    <p>Understanding the patterns and practices for effective service coordination in modern distributed systems.</p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home" class="text-white">Home</a></li>
+                        <li class="mb-2"><a href="#about" class="text-white">About</a></li>
+                        <li class="mb-2"><a href="#services" class="text-white">Services</a></li>
+                        <li class="mb-2"><a href="#demo" class="text-white">Demo</a></li>
+                        <li class="mb-2"><a href="#comparison" class="text-white">Comparison</a></li>
+                        <li class="mb-2"><a href="#timeline" class="text-white">Timeline</a></li>
+                        <li class="mb-2"><a href="#case-studies" class="text-white">Case Studies</a></li>
+                        <li class="mb-2"><a href="#contact" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4">
+                    <h5 class="mb-3">Newsletter</h5>
+                    <p>Subscribe to our newsletter for the latest updates on service coordination patterns and practices.</p>
+                    <form class="mt-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" aria-label="Your Email" aria-describedby="subscribe-btn">
+                            <button class="btn btn-primary" type="button" id="subscribe-btn">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <hr class="mt-4 mb-4 bg-light">
+            
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="mb-0">&copy; 2025 Web Service Coordination. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0"><a href="#" class="text-white">Privacy Policy</a> | <a href="#" class="text-white">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Document Ready
+        $(document).ready(function() {
+            // Read More Button
+            $('#read-more-btn').click(function() {
+                $('#more-content').slideToggle();
+                $(this).text(function(i, text) {
+                    return text === "Read More" ? "Read Less" : "Read More";
+                });
+            });
+            
+            // Dark Mode Toggle
+            $('#dark-mode-toggle').click(function() {
+                $('body').toggleClass('dark-mode');
+                $(this).find('i').toggleClass('fa-moon fa-sun');
+            });
+            
+            // Scroll Animation
+            $(window).scroll(function() {
+                $('.fade-in').each(function() {
+                    var position = $(this).offset().top;
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    
+                    if (scroll > position - windowHeight + 100) {
+                        $(this).addClass('visible');
+                    }
+                });
+                
+                $('.slide-in-left, .slide-in-right').each(function() {
+                    var position = $(this).offset().top;
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    
+                    if (scroll > position - windowHeight + 100) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }).scroll();
+            
+            // Orchestration Animation
+            $('#animate-orchestration').click(function() {
+                // Reset animation
+                $('#conn1, #conn2, #conn3, #conn4').css({
+                    'stroke-dasharray': '1000',
+                    'stroke-dashoffset': '1000',
+                    'animation': 'none'
+                });
+                
+                setTimeout(function() {
+                    $('#conn1').css({
+                        'animation': 'dash 1.5s linear forwards'
+                    });
+                    
+                    setTimeout(function() {
+                        $('#conn2').css({
+                            'animation': 'dash 1.5s linear forwards'
+                        });
+                        
+                        setTimeout(function() {
+                            $('#conn3').css({
+                                'animation': 'dash 1.5s linear forwards'
+                            });
+                            
+                            setTimeout(function() {
+                                $('#conn4').css({
+                                    'animation': 'dash 1.5s linear forwards'
+                                });
+                            }, 1500);
+                        }, 1500);
+                    }, 1500);
+                }, 100);
+            });
+            
+            // Choreography Animation
+            $('#animate-choreography').click(function() {
+                // Reset animation
+                $('#conn1c, #conn2c, #conn3c, #conn4c, #conn5c').css({
+                    'stroke-dasharray': '1000',
+                    'stroke-dashoffset': '1000',
+                    'animation': 'none'
+                });
+                
+                setTimeout(function() {
+                    $('#conn1c, #conn2c, #conn3c').css({
+                        'animation': 'dash 1.5s linear forwards'
+                    });
+                    
+                    setTimeout(function() {
+                        $('#conn4c, #conn5c').css({
+                            'animation': 'dash 1.5s linear forwards'
+                        });
+                    }, 1500);
+                }, 100);
+            });
+            
+            // Add animation keyframes
+            $('<style>')
+                .prop('type', 'text/css')
+                .html(`
+                    @keyframes dash {
+                        to {
+                            stroke-dashoffset: 0;
+                        }
+                    }
+                `)
+                .appendTo('head');
+        });
+    </script>
+</body>
+</html>
